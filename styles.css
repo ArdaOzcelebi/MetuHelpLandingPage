@@ -55,7 +55,7 @@ body {
 }
 
 .nav-brand .logo-img {
-    height: 50px;
+    height: 75px;
     width: auto;
     object-fit: contain;
 }
@@ -426,6 +426,13 @@ body {
     background: var(--text-dark);
     color: var(--white);
     padding: 3rem 0 1.5rem;
+}
+
+.footer .logo-img {
+    max-height: 80px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 1rem;
 }
 
 .footer-content {
