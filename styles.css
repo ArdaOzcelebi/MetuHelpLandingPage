@@ -332,14 +332,18 @@ body {
     border-radius: 15px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    overflow: hidden;
 }
 
 .visual-container {
+    width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    transform: scale(2);
-    transform-origin: center;
-    padding: 5rem 0;
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flow-diagram {
@@ -521,8 +525,11 @@ body {
     }
     
     .visual-container {
-        transform: scale(1);
-        padding: 2rem 0;
+        padding: 1.5rem 0;
+    }
+    
+    .infographic-visual {
+        padding: 1rem;
     }
     
     .cta-title {
@@ -550,8 +557,11 @@ body {
     }
     
     .visual-container {
-        transform: scale(0.8);
         padding: 1rem 0;
+    }
+    
+    .infographic-visual {
+        padding: 0.5rem;
     }
 }
 
