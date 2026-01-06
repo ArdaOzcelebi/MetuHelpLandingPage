@@ -330,11 +330,16 @@ body {
     padding: 2rem;
     background: var(--bg-light);
     border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .visual-container {
     max-width: 800px;
     margin: 0 auto;
+    transform: scale(1.5);
+    padding: 4rem 0;
 }
 
 .flow-diagram {
@@ -515,6 +520,11 @@ body {
         margin: 1rem 0;
     }
     
+    .visual-container {
+        transform: scale(1);
+        padding: 2rem 0;
+    }
+    
     .cta-title {
         font-size: 2rem;
     }
@@ -537,6 +547,11 @@ body {
     
     .hero-content {
         padding: 3rem 0;
+    }
+    
+    .visual-container {
+        transform: scale(0.8);
+        padding: 1rem 0;
     }
 }
 
