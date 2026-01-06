@@ -223,7 +223,7 @@ body {
 }
 
 .feature-card-primary .feature-title {
-    color: var(--primary-color);
+    color: var(--text-dark);
 }
 
 .feature-card-secondary .feature-icon {
