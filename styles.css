@@ -337,9 +337,9 @@ body {
 .visual-container {
     max-width: 800px;
     margin: 0 auto;
-    transform: scale(1.5);
+    transform: scale(2);
     transform-origin: center;
-    padding: 4rem 0;
+    padding: 5rem 0;
 }
 
 .flow-diagram {
