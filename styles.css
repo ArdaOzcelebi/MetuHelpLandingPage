@@ -215,8 +215,7 @@ body {
 }
 
 .feature-card-primary {
-    border: 2px solid var(--primary-color);
-    box-shadow: 0 4px 12px rgba(186, 12, 47, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .feature-card-primary .feature-icon {
@@ -224,7 +223,7 @@ body {
 }
 
 .feature-card-primary .feature-title {
-    color: var(--primary-color);
+    color: var(--text-dark);
 }
 
 .feature-card-secondary .feature-icon {
@@ -232,7 +231,6 @@ body {
 }
 
 .feature-card-secondary {
-    border-left: 4px solid var(--primary-color);
 }
 
 .feature-icon {
