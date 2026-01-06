@@ -50,29 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Handle form submission
-    const joinForm = document.getElementById('joinForm');
-    if (joinForm) {
-        joinForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const emailInput = this.querySelector('.email-input');
-            const email = emailInput.value;
-            
-            // Validate METU email
-            if (!email.endsWith('@metu.edu.tr')) {
-                showToast('Please use your METU email address (@metu.edu.tr)', 'error');
-                return;
-            }
-            
-            // Show success message
-            showToast(`Thank you for your interest! We'll send an invitation to ${email} soon.`);
-            
-            // Reset form
-            emailInput.value = '';
-        });
-    }
-
     // Add scroll animation effect
     const observerOptions = {
         threshold: 0.1,
