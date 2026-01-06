@@ -332,13 +332,13 @@ body {
     border-radius: 15px;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .visual-container {
     max-width: 800px;
     margin: 0 auto;
     transform: scale(1.5);
+    transform-origin: center;
     padding: 4rem 0;
 }
 
