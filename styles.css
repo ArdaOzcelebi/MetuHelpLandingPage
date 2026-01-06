@@ -342,6 +342,19 @@ body {
     height: auto;
 }
 
+.svg-link {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.svg-link:hover .feature-circle {
+    opacity: 0.4;
+}
+
+.svg-link:hover text {
+    fill: var(--primary-color);
+}
+
 /* CTA Section */
 .cta-section {
     padding: 6rem 0;
