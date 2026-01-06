@@ -8,6 +8,7 @@
 :root {
     --primary-color: #4A90E2;
     --secondary-color: #50C878;
+    --secondary-color-hover: #45B368;
     --accent-color: #FFB347;
     --text-dark: #2C3E50;
     --text-light: #7F8C8D;
@@ -392,7 +393,7 @@ body {
 }
 
 .btn-join:hover {
-    background: #45B368;
+    background: var(--secondary-color-hover);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
@@ -521,6 +522,37 @@ body {
 /* Smooth Scrolling */
 html {
     scroll-behavior: smooth;
+}
+
+/* Toast Notifications */
+.toast-notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: var(--white);
+    color: var(--text-dark);
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+    max-width: 400px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast-notification.toast-error {
+    border-left-color: #E74C3C;
+}
+
+.toast-notification.toast-success {
+    border-left-color: var(--secondary-color);
 }
 
 /* Animations */

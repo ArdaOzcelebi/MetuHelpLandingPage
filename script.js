@@ -1,5 +1,35 @@
 // METU HELP Landing Page JavaScript
 
+// Create toast notification function
+function showToast(message, type = 'success') {
+    // Remove any existing toasts
+    const existingToast = document.querySelector('.toast-notification');
+    if (existingToast) {
+        existingToast.remove();
+    }
+    
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.className = `toast-notification toast-${type}`;
+    toast.textContent = message;
+    
+    // Add to body
+    document.body.appendChild(toast);
+    
+    // Trigger animation
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            toast.remove();
+        }, 300);
+    }, 4000);
+}
+
 // Smooth scroll for navigation links
 document.addEventListener('DOMContentLoaded', function() {
     // Handle smooth scrolling for anchor links
@@ -31,12 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Validate METU email
             if (!email.endsWith('@metu.edu.tr')) {
-                alert('Please use your METU email address (@metu.edu.tr)');
+                showToast('Please use your METU email address (@metu.edu.tr)', 'error');
                 return;
             }
             
             // Show success message
-            alert('Thank you for your interest! We\'ll send an invitation to ' + email + ' soon.');
+            showToast(`Thank you for your interest! We'll send an invitation to ${email} soon.`);
             
             // Reset form
             emailInput.value = '';
