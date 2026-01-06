@@ -6,7 +6,7 @@
 }
 
 :root {
-    --primary-color: #E30A17;
+    --primary-color: #BA0C2F;
     --secondary-color: #50C878;
     --secondary-color-hover: #45B368;
     --accent-color: #FFB347;
@@ -94,7 +94,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, #E30A17 0%, #8B0000 100%);
+    background: linear-gradient(135deg, #BA0C2F 0%, #8B0000 100%);
     color: var(--white);
     padding-bottom: 4rem;
 }
@@ -322,7 +322,7 @@ body {
 /* CTA Section */
 .cta-section {
     padding: 6rem 0;
-    background: linear-gradient(135deg, #E30A17 0%, #8B0000 100%);
+    background: linear-gradient(135deg, #BA0C2F 0%, #8B0000 100%);
     color: var(--white);
     text-align: center;
 }
