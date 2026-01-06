@@ -352,7 +352,7 @@ body {
 }
 
 .svg-link:hover text {
-    fill: #BA0C2F;
+    fill: var(--primary-color);
 }
 
 /* CTA Section */
