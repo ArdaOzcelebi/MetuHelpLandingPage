@@ -16,12 +16,9 @@ function showToast(message, type = 'success') {
     // Add to body
     document.body.appendChild(toast);
     
-    // Trigger animation using requestAnimationFrame for better performance
-    // Double requestAnimationFrame ensures the element is fully rendered before animating
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            toast.classList.add('show');
-        });
+    // Trigger animation using helper function
+    triggerAnimation(() => {
+        toast.classList.add('show');
     });
     
     // Remove after 4 seconds
@@ -52,6 +49,17 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
     };
+}
+
+/**
+ * Helper to trigger DOM animations after element is fully rendered
+ * Uses double requestAnimationFrame to ensure element is painted before animation
+ * @param {Function} callback - The animation callback to execute
+ */
+function triggerAnimation(callback) {
+    requestAnimationFrame(() => {
+        requestAnimationFrame(callback);
+    });
 }
 
 // Constants
