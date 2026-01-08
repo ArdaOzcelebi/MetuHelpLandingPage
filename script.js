@@ -16,41 +16,72 @@ function showToast(message, type = 'success') {
     // Add to body
     document.body.appendChild(toast);
     
-    // Trigger animation
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
+    // Trigger animation using requestAnimationFrame for better performance
+    // Double requestAnimationFrame ensures the element is fully rendered before animating
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            toast.classList.add('show');
+        });
+    });
     
     // Remove after 4 seconds
     setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
+        // Use transitionend event for cleanup, with fallback timeout for safety
+        const cleanup = () => toast.remove();
+        toast.addEventListener('transitionend', cleanup, { once: true });
+        // Fallback: remove after transition duration + buffer
+        setTimeout(cleanup, 500);
     }, 4000);
 }
 
+/**
+ * Debounce helper function for performance optimization
+ * Delays function execution until after wait time has elapsed since last call
+ * @param {Function} func - The function to debounce
+ * @param {number} wait - The delay time in milliseconds
+ * @returns {Function} Debounced function
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Constants
+const SCROLL_DEBOUNCE_MS = 10;
+
 // Smooth scroll for navigation links
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle smooth scrolling for anchor links
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+    // Cache DOM elements
+    const navbar = document.querySelector('.navbar');
+    const animatedElements = document.querySelectorAll('.feature-card, .flow-step');
+    
+    // Handle smooth scrolling for anchor links (event delegation)
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href^="#"]');
+        if (!link) return;
+        
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
 
-    // Add scroll animation effect
+    // Add scroll animation effect with IntersectionObserver (more efficient than scroll listeners)
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -59,34 +90,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('animate-in');
+                // Stop observing once animated - elements only animate once on first view
+                // This is intentional for landing page performance
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
     // Observe feature cards and flow steps
-    const animatedElements = document.querySelectorAll('.feature-card, .flow-step');
     animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
 
-    // Navbar scroll effect
-    let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
-    
-    window.addEventListener('scroll', function() {
+    // Navbar scroll effect with debouncing and CSS classes
+    const handleScroll = debounce(function() {
         const currentScroll = window.pageYOffset;
         
         if (currentScroll > 100) {
-            navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            navbar.classList.add('navbar-scrolled');
         } else {
-            navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            navbar.classList.remove('navbar-scrolled');
         }
-        
-        lastScroll = currentScroll;
-    });
+    }, SCROLL_DEBOUNCE_MS);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
 });
