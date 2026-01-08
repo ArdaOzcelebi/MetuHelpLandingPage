@@ -436,6 +436,15 @@ body {
     line-height: 1.8;
 }
 
+.footer-section p a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.footer-section p a:hover {
+    color: var(--white);
+}
+
 .footer-section ul {
     list-style: none;
 }
@@ -459,6 +468,25 @@ body {
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-light);
+}
+
+.social-media-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-icon {
+    color: var(--text-light);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icon svg {
+    width: 24px;
+    height: 24px;
 }
 
 /* Responsive Design */
