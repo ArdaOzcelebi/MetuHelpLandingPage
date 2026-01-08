@@ -17,6 +17,7 @@ function showToast(message, type = 'success') {
     document.body.appendChild(toast);
     
     // Trigger animation using requestAnimationFrame for better performance
+    // Double requestAnimationFrame ensures the element is fully rendered before animating
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             toast.classList.add('show');
@@ -30,7 +31,13 @@ function showToast(message, type = 'success') {
     }, 4000);
 }
 
-// Debounce helper function for performance optimization
+/**
+ * Debounce helper function for performance optimization
+ * Delays function execution until after wait time has elapsed since last call
+ * @param {Function} func - The function to debounce
+ * @param {number} wait - The delay time in milliseconds
+ * @returns {Function} Debounced function
+ */
 function debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -42,6 +49,9 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
+
+// Constants
+const SCROLL_DEBOUNCE_MS = 10;
 
 // Smooth scroll for navigation links
 document.addEventListener('DOMContentLoaded', function() {
@@ -96,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             navbar.classList.remove('navbar-scrolled');
         }
-    }, 10);
+    }, SCROLL_DEBOUNCE_MS);
     
     window.addEventListener('scroll', handleScroll, { passive: true });
 });
