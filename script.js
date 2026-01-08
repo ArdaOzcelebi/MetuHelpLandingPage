@@ -53,7 +53,9 @@ function debounce(func, wait) {
 
 /**
  * Helper to trigger DOM animations after element is fully rendered
- * Uses double requestAnimationFrame to ensure element is painted before animation
+ * Uses double requestAnimationFrame to ensure element is painted before animation.
+ * The first rAF queues the callback for the next frame, and the second ensures
+ * the DOM changes are committed and painted before executing the animation.
  * @param {Function} callback - The animation callback to execute
  */
 function triggerAnimation(callback) {
