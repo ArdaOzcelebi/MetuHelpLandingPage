@@ -16,41 +16,58 @@ function showToast(message, type = 'success') {
     // Add to body
     document.body.appendChild(toast);
     
-    // Trigger animation
-    setTimeout(() => {
-        toast.classList.add('show');
-    }, 10);
+    // Trigger animation using requestAnimationFrame for better performance
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            toast.classList.add('show');
+        });
+    });
     
     // Remove after 4 seconds
     setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
+        toast.addEventListener('transitionend', () => toast.remove(), { once: true });
     }, 4000);
+}
+
+// Debounce helper function for performance optimization
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }
 
 // Smooth scroll for navigation links
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle smooth scrolling for anchor links
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
-            
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+    // Cache DOM elements
+    const navbar = document.querySelector('.navbar');
+    const animatedElements = document.querySelectorAll('.feature-card, .flow-step');
+    
+    // Handle smooth scrolling for anchor links (event delegation)
+    document.addEventListener('click', function(e) {
+        const link = e.target.closest('a[href^="#"]');
+        if (!link) return;
+        
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
 
-    // Add scroll animation effect
+    // Add scroll animation effect with IntersectionObserver (more efficient than scroll listeners)
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -59,34 +76,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('animate-in');
+                observer.unobserve(entry.target); // Stop observing once animated
             }
         });
     }, observerOptions);
 
     // Observe feature cards and flow steps
-    const animatedElements = document.querySelectorAll('.feature-card, .flow-step');
     animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
 
-    // Navbar scroll effect
-    let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
-    
-    window.addEventListener('scroll', function() {
+    // Navbar scroll effect with debouncing and CSS classes
+    const handleScroll = debounce(function() {
         const currentScroll = window.pageYOffset;
         
         if (currentScroll > 100) {
-            navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            navbar.classList.add('navbar-scrolled');
         } else {
-            navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            navbar.classList.remove('navbar-scrolled');
         }
-        
-        lastScroll = currentScroll;
-    });
+    }, 10);
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
 });
