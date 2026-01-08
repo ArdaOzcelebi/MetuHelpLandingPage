@@ -27,7 +27,11 @@ function showToast(message, type = 'success') {
     // Remove after 4 seconds
     setTimeout(() => {
         toast.classList.remove('show');
-        toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+        // Use transitionend event for cleanup, with fallback timeout for safety
+        const cleanup = () => toast.remove();
+        toast.addEventListener('transitionend', cleanup, { once: true });
+        // Fallback: remove after transition duration + buffer
+        setTimeout(cleanup, 500);
     }, 4000);
 }
 
@@ -87,7 +91,9 @@ document.addEventListener('DOMContentLoaded', function() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
-                observer.unobserve(entry.target); // Stop observing once animated
+                // Stop observing once animated - elements only animate once on first view
+                // This is intentional for landing page performance
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
