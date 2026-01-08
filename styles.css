@@ -503,8 +503,7 @@ body {
     }
     
     .flow-arrow {
-        transform: rotate(90deg);
-        margin: 1rem 0;
+        display: none;
     }
     
     .cta-title {
