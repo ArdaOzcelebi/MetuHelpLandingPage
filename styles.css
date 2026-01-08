@@ -461,6 +461,25 @@ body {
     color: var(--text-light);
 }
 
+.social-media-icons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-icon {
+    color: var(--text-light);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hero-title {
