@@ -436,6 +436,15 @@ body {
     line-height: 1.8;
 }
 
+.footer-section p a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.footer-section p a:hover {
+    color: var(--white);
+}
+
 .footer-section ul {
     list-style: none;
 }
