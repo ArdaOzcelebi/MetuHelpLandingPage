@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add scroll animation effect with IntersectionObserver (more efficient than scroll listeners)
-    if ('IntersectionObserver' in window) {
+    if (typeof IntersectionObserver !== 'undefined') {
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
