@@ -1,5 +1,9 @@
 // METU HELP Landing Page JavaScript
 
+// Constants
+const TOAST_TRANSITION_DURATION_MS = 300; // Should match CSS transition duration
+const SCROLL_DEBOUNCE_MS = 100;
+
 // Create toast notification function
 function showToast(message, type = 'success') {
     // Remove any existing toasts
@@ -17,21 +21,15 @@ function showToast(message, type = 'success') {
     document.body.appendChild(toast);
     
     // Trigger animation using requestAnimationFrame for better performance
-    // Double requestAnimationFrame ensures the element is fully rendered before animating
     requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            toast.classList.add('show');
-        });
+        toast.classList.add('show');
     });
     
     // Remove after 4 seconds
     setTimeout(() => {
         toast.classList.remove('show');
-        // Use transitionend event for cleanup, with fallback timeout for safety
-        const cleanup = () => toast.remove();
-        toast.addEventListener('transitionend', cleanup, { once: true });
-        // Fallback: remove after transition duration + buffer
-        setTimeout(cleanup, 500);
+        // Remove element after transition completes
+        setTimeout(() => toast.remove(), TOAST_TRANSITION_DURATION_MS);
     }, 4000);
 }
 
@@ -53,9 +51,6 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
-
-// Constants
-const SCROLL_DEBOUNCE_MS = 10;
 
 // Smooth scroll for navigation links
 document.addEventListener('DOMContentLoaded', function() {
@@ -82,26 +77,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add scroll animation effect with IntersectionObserver (more efficient than scroll listeners)
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+    if (typeof IntersectionObserver !== 'undefined') {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-                // Stop observing once animated - elements only animate once on first view
-                // This is intentional for landing page performance
-                observer.unobserve(entry.target);
-            }
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    // Stop observing once animated - elements only animate once on first view
+                    // This is intentional for landing page performance
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards and flow steps
+        animatedElements.forEach(el => {
+            observer.observe(el);
         });
-    }, observerOptions);
-
-    // Observe feature cards and flow steps
-    animatedElements.forEach(el => {
-        observer.observe(el);
-    });
+    } else {
+        // Fallback for browsers without IntersectionObserver support
+        animatedElements.forEach(el => {
+            el.classList.add('animate-in');
+        });
+    }
 
     // Navbar scroll effect with debouncing and CSS classes
     const handleScroll = debounce(function() {

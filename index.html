@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="METU HELP - Connecting METU students for academic support and collaboration">
     <title>METU HELP - Student Community Platform</title>
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="metuhelplogo.png" as="image">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,7 +15,7 @@
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <img src="metuhelplogo.png" alt="METU HELP Logo" class="logo-img">
+                    <img src="metuhelplogo.png" alt="METU HELP Logo" class="logo-img" width="112" height="112">
                 </div>
                 <div class="nav-links">
                     <a href="#scope">Features</a>
@@ -136,7 +138,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <img src="metuhelplogo.png" alt="METU HELP Logo" class="logo-img">
+                    <img src="metuhelplogo.png" alt="METU HELP Logo" class="logo-img" loading="lazy" width="120" height="120">
                     <p>Building a stronger academic community, one connection at a time.</p>
                 </div>
                 <div class="footer-section">
@@ -171,6 +173,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

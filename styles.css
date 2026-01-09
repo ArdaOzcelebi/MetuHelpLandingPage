@@ -147,7 +147,7 @@ body {
     font-weight: 600;
     text-decoration: none;
     border-radius: 50px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
     display: inline-block;
     cursor: pointer;
     border: none;
@@ -209,9 +209,10 @@ body {
     padding: 2.5rem;
     border-radius: 15px;
     box-shadow: var(--shadow);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     width: 100%;
+    will-change: transform;
 }
 
 .feature-card:hover {
@@ -383,7 +384,7 @@ body {
     font-weight: 600;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     text-decoration: none;
     display: inline-block;
 }
@@ -573,9 +574,10 @@ html {
     z-index: 10000;
     opacity: 0;
     transform: translateX(400px);
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
     max-width: 400px;
     border-left: 4px solid var(--secondary-color);
+    will-change: transform, opacity;
 }
 
 .toast-notification.show {
