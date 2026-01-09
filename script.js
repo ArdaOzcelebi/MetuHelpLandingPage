@@ -1,5 +1,9 @@
 // METU HELP Landing Page JavaScript
 
+// Constants
+const TOAST_TRANSITION_DURATION_MS = 300; // Should match CSS transition duration
+const SCROLL_DEBOUNCE_MS = 100;
+
 // Create toast notification function
 function showToast(message, type = 'success') {
     // Remove any existing toasts
@@ -25,7 +29,7 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.classList.remove('show');
         // Remove element after transition completes
-        setTimeout(() => toast.remove(), 300);
+        setTimeout(() => toast.remove(), TOAST_TRANSITION_DURATION_MS);
     }, 4000);
 }
 
@@ -47,9 +51,6 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
-
-// Constants
-const SCROLL_DEBOUNCE_MS = 100;
 
 // Smooth scroll for navigation links
 document.addEventListener('DOMContentLoaded', function() {
